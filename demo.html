@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+
+
+<body>
+	<form id="form">
+		用户名: <input type="text" name="userName">
+		密  码: <input type="password" name="password">
+		<select name="type" id="">
+			<option value="1">A</option>
+			<option value="2">B</option>
+		</select>
+		<input type="checkbox" name="checkbox" value="苹果">苹果
+		<input type="checkbox" name="checkbox" value="香蕉">香蕉
+		<input type="checkbox" name="checkbox" value="菠萝">菠萝
+		<input type="submit" value="提交">
+	</form>
+</body>
+	<script src="jquery-2.0.3.min.js"></script>
+	<script src="jquery.form.js"></script>
+	<script>
+$(function(){
+	console.log($("#form"))
+	
+		// (function($){  
+        $.fn.serializeJson=function(){  
+            var serializeObj={};  
+            var array=this.serializeArray();  
+            var str=this.serialize();  
+            $(array).each(function(){ 
+            	//判断serializeObj对象中有没有xx属性 
+                if(serializeObj[this.name]){  
+                	//判断是不是数组
+                    if($.isArray(serializeObj[this.name])){  
+                    	//把当前项推到数组中
+                        serializeObj[this.name].push(this.value);  
+                    }else{  
+                    	//保存在数组中
+                        serializeObj[this.name]=[serializeObj[this.name],this.value];  
+                    }  
+                }else{  
+                    serializeObj[this.name]=this.value;   
+                }  
+            });  
+            return serializeObj;  
+        };  
+    // })(jQuery); 
+    $("#form").on("submit",function(){
+		var data = $("#form").serializeJson();
+    		console.log(data);
+    		// console.log(11)
+    		return false;
+	})
+})
+	
+
+    
+	</script>
+
+</html>
